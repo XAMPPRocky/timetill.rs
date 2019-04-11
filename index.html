@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time till Rust</title>
+    <style>
+    * {
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    }
+    h1 {
+        font-size: 6rem;
+    }
+    h2 {
+        font-size: 4rem;
+    }
+    </style>
+</head>
+<body>
+    <h1>Time till Oxidize</h1>
+    <h2 id="time"></h2>
+</body>
+<script>
+    function main(window) {
+            const confDate = new Date('4/27/2019')
+            const heading = document.querySelector('#time')
+            const current = new Date()
+            const diffTime = Math.abs(confDate.getTime() - current.getTime())
+
+            const days = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+            const dayDiff = diffTime - (days * 24 * 60 * 60 * 1000)
+            const hours = Math.abs(Math.floor(dayDiff / (1000 * 60 * 60)))
+            const hourDiff = dayDiff - (hours * 60 * 60 * 1000)
+            const minutes = Math.abs(Math.floor(hourDiff / (1000 * 60)))
+            const minuteDiff = hourDiff - (minutes * 1000 * 60)
+            const seconds = Math.abs(Math.floor(minuteDiff / (1000)))
+
+            const displayTime = `${days}:${hours}:${minutes}:${seconds}`
+            heading.innerHTML = displayTime
+            setTimeout(main, 0)
+    }
+
+    main(window)
+
+</script>
+</html>
