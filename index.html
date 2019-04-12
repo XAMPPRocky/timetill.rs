@@ -10,10 +10,11 @@
 
     }
     h1 {
-        font-size: 6rem;
+        font-size: 8rem;
     }
     h2 {
-        font-size: 4rem;
+        font-size: 6rem;
+        font-family: monospace;
     }
     </style>
 </head>
@@ -35,13 +36,24 @@
             const minutes = Math.abs(Math.floor(hourDiff / (1000 * 60)))
             const minuteDiff = hourDiff - (minutes * 1000 * 60)
             const seconds = Math.abs(Math.floor(minuteDiff / (1000)))
+            const secondDiff = minuteDiff - (seconds * 1000)
 
-            const displayTime = `${days}:${hours}:${minutes}:${seconds}`
+        const displayTime = `${format(days, 2)}:${format(hours, 2)}:${format(minutes, 2)}:${format(seconds, 2)}.${format(secondDiff, 3)}`
             heading.innerHTML = displayTime
             setTimeout(main, 0)
     }
 
     main(window)
+
+    function format(num, size) {
+        let s = num.toString()
+
+        while (s.length < size) {
+            s = "0" + s
+        }
+
+        return s
+    }
 
 </script>
 </html>
