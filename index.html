@@ -23,7 +23,7 @@
     <h2 id="time"></h2>
 </body>
 <script>
-    function main(window) {
+    function main() {
             const confDate = new Date('4/27/2019')
             const heading = document.querySelector('#time')
             const current = new Date()
@@ -40,10 +40,10 @@
 
         const displayTime = `${format(days, 2)}:${format(hours, 2)}:${format(minutes, 2)}:${format(seconds, 2)}.${format(secondDiff, 3)}`
             heading.innerHTML = displayTime
-            setTimeout(main, 0)
+            requestAnimationFrame(main)
     }
 
-    main(window)
+    main()
 
     function format(num, size) {
         let s = num.toString()
