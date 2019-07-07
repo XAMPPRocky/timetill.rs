@@ -1,0 +1,28 @@
+[
+    {
+        "name": "Rust Belt Rust",
+        "date": "2019-10-08T00:00:00",
+        "blurb": "A Rust Conference For Developers Of Any Skill Level",
+        "location": "Dayton, Ohio, USA",
+        "website": "//www.rust-belt-rust.com",
+        "schedule": "//www.rust-belt-rust.com/sessions",
+        "features": {
+            "duration": "2 days",
+            "kind": "Conference",
+            "price": "$200"
+        }
+    },
+    {
+        "name": "Rust.Tokyo",
+        "date": "2019-10-26T00:00:00",
+        "blurb": "Rust.Tokyo is an one day conference for Rustaceans with 200+ attendees.",
+        "location": "Tokyo, Japan",
+        "website": "//rust.tokyo",
+        "schedule": "//rust.tokyo/#sessions",
+        "features": {
+            "duration": "1 day",
+            "kind": "Conference",
+            "price": "Free"
+        }
+    }
+]
