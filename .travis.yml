@@ -1,0 +1,12 @@
+language: node_js
+before_script:
+    - yarn global add parcel-bundler
+script: parcel build index.html
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: true
+  local_dir: dist/
+  on:
+    branch: master
