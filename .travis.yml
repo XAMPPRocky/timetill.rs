@@ -1,4 +1,6 @@
-language: node
+language: node_js
+node_js:
+    - node
 before_script:
     - yarn global add parcel-bundler
 script: parcel build index.html
