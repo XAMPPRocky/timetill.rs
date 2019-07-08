@@ -16,4 +16,4 @@ module.exports=[{name:"Colorado Gold Rust",date:"2019-09-20T09:09:00-06:00",blur
 },{"vue":"4673","./time.vue":"Hwp6","./data.json":"7boC","moment":"iROh"}],"mpVp":[function(require,module,exports) {
 "use strict";var e=r(require("vue")),u=r(require("./app.vue"));function r(e){return e&&e.__esModule?e:{default:e}}new e.default(u.default).$mount("#app");
 },{"vue":"4673","./app.vue":"hWNS"}]},{},["mpVp"], null)
-//# sourceMappingURL=/script.d95092e0.js.map
+//# sourceMappingURL=/timetill.rs/script.d95092e0.js.map
