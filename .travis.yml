@@ -3,7 +3,7 @@ node_js:
     - node
 before_script:
     - yarn global add parcel-bundler
-script: parcel build index.html
+script: parcel build index.html --public-url /timetill.rs/
 deploy:
   provider: pages
   skip_cleanup: true
