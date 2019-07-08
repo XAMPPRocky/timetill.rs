@@ -1,79 +1,158 @@
 <template>
-  <div class="container">
-      <header class="row">
-          <div class="col">
-              <h1>Time till...</h1>
-          </div>
-          <div class="col d-none d-md-initial">
-              <h1>{{nextConference.name}}</h1>
-          </div>
-          <div class="col d-none d-md-initial">
-              <time-slice :time="new Date(nextConference.date)"></time-slice>
-          </div>
-      </header>
+    <div>
+        <div class="container">
+            <header class="row sticky-top align-items-center">
+                <div class="col">
+                    <h1>Time till...</h1>
+                </div>
+                <div class="col d-none d-md-block">
+                    <h1 class="conf-name">
+                        <a :href="nextConference.website" target="_blank">
+                            {{nextConference.name}}
+                        </a>
+                    </h1>
+                </div>
+                <div class="col d-none d-md-block">
+                    <time-slice :time="nextConference.date"></time-slice>
+                </div>
+            </header>
+            <section class="row">
+                <div class="col-12 col-md-6 order-last order-md-first text-right">
+                    <div class="text-left">
+                        <h2>About timetill.rs</h2>
+                        <p>
+                        <a href="/">timetill.rs</a> is a community project focused
+                        on highlighting all the Rust conferences around the world.
+                        Timetill.rs is an open project that anyone in the community
+                        can contribute to.
+                        </p>
+                        <p>Want your conference featured? We have documentation on
+                        adding events in our <a href="#">how to contribute document.</a></p>
+                    </div>
 
-      <section class="row">
-          <div class="col-12 col-md-6 order-last order-md-first">
-              <h2>About timetill.rs</h2>
-              <p>Elit reiciendis placeat deleniti voluptates tenetur Eos soluta libero dolorem nemo eos Sequi sunt iste commodi facere aliquam Provident numquam eum optio necessitatibus sit minima Maxime sapiente neque cum ea</p>
-              <p>Sit quae consectetur sunt quis architecto illum. Autem quod eaque itaque vitae nesciunt? Harum commodi deleniti necessitatibus quia nam? In modi mollitia illum facilis dolore! Laudantium officia distinctio necessitatibus tempore!</p>
+                    <a href="#" class="btn btn-github">GitHub</a>
+                </div>
 
-              <a href="#" class="btn">GitHub</a>
-          </div>
-
-          <div v-for="conference in conferences" class="col-12 col-md-6">
-              <div class="row">
-                  <div class="col-12">
-                      <h2>{{conference.name}}</h2>
-                  </div>
-                  <div class="col-12">
-                      <time-slice :time="new Date(conference.date)"></time-slice>
-                  </div>
-                  <div class="col-12">
-                      <p><em>&ldquo;{{conference.blurb}}</em>&rdquo;</p>
-                  </div>
-                  <div class="col-12">
-                      <dl class="row">
-                          <template v-for="(feature, name) in conference.features">
-                              <dt class="col-6 text-capitalize">{{name}}</dt>
-                              <dd class="col-6 text-right">{{feature}}</dd>
-                          </template>
-                      </dl>
-                  </div>
-                  <div class="col-12">
-                      <a :href="conference.schedule" target="_blank" class="btn">schedule</a>
-                      <a :href="conference.website" target="_blank" class="btn">website</a>
-                  </div>
-              </div>
-          </div>
-      </section>
-  </div>
+                <div v-for="conference in conferences" class="col-12 col-md-6 conference">
+                    <div class="row h-100">
+                        <div class="col-12 col-md-6">
+                            <h2>{{conference.name}}</h2>
+                            <h6 class="d-none d-md-block">{{when(conference.date)}}, {{conference.location}}</h6>
+                        </div>
+                        <div class="col-12 col-md-6 date">
+                            <h6 class=" text-center d-md-none">{{when(conference.date)}}<br>{{conference.location}}</h6>
+                            <time-slice :time="conference.date"></time-slice>
+                        </div>
+                        <div class="col-12 blurb">
+                            <p><em>&ldquo;{{conference.blurb}}</em>&rdquo;</p>
+                        </div>
+                        <div class="col-12">
+                            <dl class="row">
+                                <template v-for="(feature, name) in conference.features">
+                                    <dt class="col-6 text-capitalize">{{name}}</dt>
+                                    <dd class="col-6 text-capitalize text-right">{{feature}}</dd>
+                                </template>
+                            </dl>
+                        </div>
+                        <div class="col-12 text-right call-to-action">
+                            <a :href="conference.schedule" target="_blank" class="text-uppercase btn btn-secondary">schedule</a>
+                            <a :href="conference.website" target="_blank" class="text-uppercase btn btn-primary">website</a>
+                        </div>
+                        <div class="col-12 divider"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import timeSlice from './time.vue';
 import data from './data.json';
+import moment from 'moment';
 
-let conferences = data.filter(conference => {
-    const confDate = new Date(conference.date)
-    const today = new Date()
-
-    return confDate > today
-})
+let conferences = data.filter(c => new Date(c.date) > new Date())
 
 export default Vue.extend({
     components: {
         timeSlice
     }
+    computed: {
+        nextConference: function() {
+            return this.conferences[0]
+        }
+    }
+    methods: {
+        when: function (time) {
+            let momentDate = moment(time)
+
+            return momentDate.format("dddd, Do of MMMM YYYY")
+        },
+    }
     data() {
         return {
-            nextConference: conferences[0]
             conferences: conferences
-        };
+        }
     }
 });
 </script>
 
 <style lang="scss" scoped>
+header {
+    // position: sticky;
+    position: -webkit-sticky;
+    margin: 2rem 0;
+    padding: 2rem 0;
+    background-color: white;
+
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
+    a {
+        color: inherit;
+        text-decoration: underline;
+    }
+}
+
+.conference {
+    margin-bottom: 2rem;
+    h2 {
+        margin-bottom: 0;
+    }
+
+    .divider {
+        margin-top: 2rem;
+        border-bottom: 1px solid black;
+    }
+}
+
+.blurb {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.btn-github {
+    background-color: #24292e;
+    color: white;
+}
+
+.call-to-action a {
+    font-size: 80%;
+    font-weight: 600;
+}
+
+@media (max-width: 767px) {
+    .date {
+        margin-top: 2rem;
+    }
+
+}
+
+@media (min-width: 768px) {
+    section > div {
+        padding: 0 4rem;
+    }
+}
+
 </style>

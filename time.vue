@@ -3,16 +3,19 @@
         <div class="col">
         <template v-for="slice in slices">
             <div class="d-inline-block">
-                <h2>{{slice.time}}</h2>
+                <h1 class="d-md-none">{{slice.time}}</h1>
+                <h2 class="d-none d-md-block">{{slice.time}}</h2>
                 <h6 class="d-inline text-uppercase">{{slice.period}}</h6>
             </div>
-            <h1 class="divider d-inline-block">:</h1>
+            <h1 class="divider align-top">:</h1>
         </template>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import moment from 'moment';
+
 export default {
     data() {
         return {
@@ -20,49 +23,63 @@ export default {
         }
     }
     created() {
-        window.setInterval(this.generateSlices, 100)
+        this.generateSlices()
+        window.setInterval(this.generateSlices, 1000)
     }
     destroyed() {
         clearInterval(this.generateSlices)
     }
     props: {
-        time: Date
+        time: String
     }
     methods: {
         generateSlices: function () {
-            const today = new Date()
-            const diffTime = Math.abs(this.time.getTime() - today)
-            const days = Math.floor(diffTime / (1000 * 60 * 60 * 24))
-            const dayDiff = diffTime - (days * 24 * 60 * 60 * 1000)
-            const hours = Math.abs(Math.floor(dayDiff / (1000 * 60 * 60)))
-            const hourDiff = dayDiff - (hours * 60 * 60 * 1000)
-            const minutes = Math.abs(Math.floor(hourDiff / (1000 * 60)))
-            const minuteDiff = hourDiff - (minutes * 1000 * 60)
-            const seconds = Math.abs(Math.floor(minuteDiff / (1000)))
-            const secondDiff = minuteDiff - (seconds * 1000)
+            const today = moment()
+            const confDate = moment(this.time)
+            const duration = moment.duration(confDate.diff(today))
+            let slices = []
 
-            this.slices = [
-                {
-                    "time": days,
-                    "period": "days"
-                },
-                {
-                    "time": minutes,
-                    "period": "mins"
-                },
-                {
-                    "time": seconds.toString().padStart("0", 2),
-                    "period": "secs"
-                },
-            ]
+            if (duration.asDays() !== 0) {
+                slices.push({
+                    time: Math.floor(duration.asDays()).toString().padStart(2, "0"),
+                    period: "days"
+                })
+            } else {
+                slices.push({
+                    time: duration.hours().toString().padStart(2, "0"),
+                    period: "hrs"
+                })
+            }
 
+            slices.push({
+                time: duration.minutes().toString().padStart(2, "0"),
+                period: "mins"
+            })
+
+            slices.push({
+                time: duration.seconds().toString().padStart(2, "0"),
+                period: "secs"
+            })
+
+            this.slices = slices
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.time .col .divider:last-child {
-    display: none;
+.time {
+    h2 {
+        margin-bottom: 0;
+    }
+}
+
+.divider {
+    line-height: 0.85;
+    display: inline-block;
+
+    &:last-of-type {
+        display: none;
+    }
 }
 </style>

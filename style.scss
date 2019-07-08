@@ -1,7 +1,13 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 
-* {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+footer {
+    padding: 2rem 0;
+    background-color: #02182B;
 
+    ul {
+        margin: 0;
+    }
+    li, a {
+        color: white;
+    }
 }
-
