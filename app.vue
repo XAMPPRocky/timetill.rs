@@ -27,10 +27,10 @@
                         can contribute to.
                         </p>
                         <p>Want your conference featured? We have documentation on
-                        adding events in our <a href="#">how to contribute document.</a></p>
+                        adding events in our <a href="//github.com/XAMPPRocky/timetill.rs/blob/master/CONTRIBUTING.md">how to contribute document.</a></p>
                     </div>
 
-                    <a href="#" class="btn btn-github">GitHub</a>
+                    <a href="//github.com/XAMPPRocky/timetill.rs" class="btn btn-github">GitHub</a>
                 </div>
 
                 <div v-for="conference in conferences" class="col-12 col-md-6 conference">
@@ -81,10 +81,11 @@
 <script lang="ts">
 import Vue from "vue";
 import timeSlice from './time.vue';
-import data from './data.json';
+import data from './conferences.json';
 import moment from 'moment';
 
 let conferences = data.filter(c => new Date(c.date) > new Date())
+                      .sort((a, b) => new Date(a.date) - new Date(b.date))
 
 export default Vue.extend({
     components: {
