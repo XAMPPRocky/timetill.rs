@@ -2,7 +2,7 @@ language: node_js
 node_js:
     - node
 before_script:
-    - yarn global add parcel-bundler
+    - yarn global add parcel-bundler --no-source-maps
 script: parcel build index.html
 deploy:
   provider: pages
