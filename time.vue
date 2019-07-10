@@ -2,9 +2,9 @@
     <div class="time row text-center">
         <div class="col">
         <template v-for="slice in slices">
-            <div class="d-inline-block">
-                <h1 class="d-md-none">{{slice.time}}</h1>
-                <h2 class="d-none d-md-block">{{slice.time}}</h2>
+            <div class="d-inline-block" :class="over100Days">
+                <h1 class="d-md-none text-monospace">{{slice.time}}</h1>
+                <h2 class="d-none d-md-block text-monospace">{{slice.time}}</h2>
                 <h6 class="d-inline text-uppercase">{{slice.period}}</h6>
             </div>
             <h1 class="divider align-top">:</h1>
@@ -22,6 +22,11 @@ export default {
             slices: []
         }
     }
+    computed: {
+        over100Days: function() {
+            return { 'small-numbers': this.getDuration().asDays() >= 100 }
+        }
+    }
     created() {
         this.generateSlices()
         window.setInterval(this.generateSlices, 1000)
@@ -33,10 +38,13 @@ export default {
         time: String
     }
     methods: {
-        generateSlices: function () {
+        getDuration: function () {
             const today = moment()
             const confDate = moment(this.time)
-            const duration = moment.duration(confDate.diff(today))
+            return moment.duration(confDate.diff(today))
+        }
+        generateSlices: function () {
+            const duration = this.getDuration()
             let slices = []
 
             if (duration.asDays() !== 0) {
@@ -80,6 +88,15 @@ export default {
 
     &:last-of-type {
         display: none;
+    }
+}
+
+.small-numbers {
+    h1 {
+        font-size: 2.1rem;
+    }
+    h2 {
+        font-size: 1.6rem;
     }
 }
 </style>

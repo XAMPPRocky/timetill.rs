@@ -1,4 +1,13 @@
+$orange: #E26D5A;
+$blue: #3C91E6;
+$gray: #393E41;
+$secondary: $gray;
+$info: $orange;
 @import 'node_modules/bootstrap/scss/bootstrap';
+
+a:hover {
+    color: inherit;
+}
 
 footer {
     padding: 2rem 0;

@@ -2,11 +2,11 @@
     <div>
         <div class="container">
             <header class="row sticky-top align-items-center">
-                <div class="col">
+                <div class="col text-center">
                     <h1>Time till...</h1>
                 </div>
                 <div class="col d-none d-md-block">
-                    <h1 class="conf-name">
+                    <h1 class="conf-name text-center">
                         <a :href="nextConference.website" target="_blank">
                             {{nextConference.name}}
                         </a>
@@ -17,7 +17,7 @@
                 </div>
             </header>
             <section class="row">
-                <div class="col-12 col-md-6 order-last order-md-first text-right">
+                <div class="col-12 col-md-6 order-last order-md-first text-right about">
                     <div class="text-left">
                         <h2>About timetill.rs</h2>
                         <p>
@@ -35,30 +35,42 @@
 
                 <div v-for="conference in conferences" class="col-12 col-md-6 conference">
                     <div class="row h-100">
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-sm-5 col-md-6">
                             <h2>{{conference.name}}</h2>
                             <h6 class="d-none d-md-block">{{when(conference.date)}}, {{conference.location}}</h6>
                         </div>
-                        <div class="col-12 col-md-6 date">
+                        <div class="col-12 col-sm-7 col-md-6 date">
                             <h6 class=" text-center d-md-none">{{when(conference.date)}}<br>{{conference.location}}</h6>
                             <time-slice :time="conference.date"></time-slice>
                         </div>
-                        <div class="col-12 blurb">
-                            <p><em>&ldquo;{{conference.blurb}}</em>&rdquo;</p>
+                        <div class="col-12 flex-grow-1">
+                            <div class="row">
+                                <div class="col-12 blurb">
+                                    <p><em>&ldquo;{{conference.blurb}}</em>&rdquo;</p>
+                                    <p class="cfp text-info" v-if="conference.cfp && isInFuture(conference.cfp.end)">
+                                    This conference is looking for speakers until
+                                    <a :href="conference.cfp.link">{{when(conference.cfp.end)}}</a>.
+                                    </p>
+                                </div>
+                                <div class="col-12">
+                                    <dl class="row">
+                                        <template v-for="(feature, name) in conference.features">
+                                            <dt class="col-6 text-capitalize">{{name}}</dt>
+                                            <dd class="col-6 text-capitalize text-right">{{feature}}</dd>
+                                        </template>
+                                    </dl>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12">
-                            <dl class="row">
-                                <template v-for="(feature, name) in conference.features">
-                                    <dt class="col-6 text-capitalize">{{name}}</dt>
-                                    <dd class="col-6 text-capitalize text-right">{{feature}}</dd>
-                                </template>
-                            </dl>
+                        <div class="col-12 text-right call-to-action align-self-end">
+                            <div class="row">
+                                <div class="col-12">
+                                    <a :href="conference.schedule" target="_blank" class="text-uppercase btn btn-secondary">schedule</a>
+                                    <a :href="conference.website" target="_blank" class="text-uppercase btn btn-primary">website</a>
+                                    <div class="w-100 divider"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 text-right call-to-action">
-                            <a :href="conference.schedule" target="_blank" class="text-uppercase btn btn-secondary">schedule</a>
-                            <a :href="conference.website" target="_blank" class="text-uppercase btn btn-primary">website</a>
-                        </div>
-                        <div class="col-12 divider"></div>
                     </div>
                 </div>
             </section>
@@ -89,6 +101,11 @@ export default Vue.extend({
 
             return momentDate.format("dddd, Do of MMMM YYYY")
         },
+        isInFuture: function(time) {
+            let momentDate = moment(time)
+
+            return momentDate > moment()
+        }
     }
     data() {
         return {
@@ -115,6 +132,10 @@ header {
     }
 }
 
+.about {
+    margin-bottom: 2rem;
+}
+
 .conference {
     margin-bottom: 2rem;
     h2 {
@@ -138,8 +159,16 @@ header {
 }
 
 .call-to-action a {
-    font-size: 80%;
-    font-weight: 600;
+    // font-size: 80%;
+    font-weight: 500;
+}
+
+.cfp {
+    a, a:hover {
+        text-decoration: underline;
+        font-weight: 600;
+        color: inherit;
+    }
 }
 
 @media (max-width: 767px) {
