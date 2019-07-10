@@ -16,4 +16,4 @@ module.exports=[{name:"RustConf",date:"2019-08-22T08:30:00-07:00",blurb:"RustCon
 },{"vue":"4673","./time.vue":"Hwp6","./conferences.json":"LNIi","moment":"iROh"}],"mpVp":[function(require,module,exports) {
 "use strict";var e=r(require("vue")),u=r(require("./app.vue"));function r(e){return e&&e.__esModule?e:{default:e}}new e.default(u.default).$mount("#app");
 },{"vue":"4673","./app.vue":"hWNS"}]},{},["mpVp"], null)
-//# sourceMappingURL=/timetill.rs/script.e6ced4ff.js.map
+//# sourceMappingURL=/script.e6ced4ff.js.map
