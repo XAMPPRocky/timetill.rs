@@ -7,7 +7,7 @@
                 <h2 class="d-none d-md-block text-monospace">{{slice.time}}</h2>
                 <h6 class="d-inline text-uppercase">{{slice.period}}</h6>
             </div>
-            <h1 class="divider align-top">:</h1>
+            <h1 class="divider align-top" :class="over100Days">:</h1>
         </template>
         </div>
     </div>
@@ -83,7 +83,7 @@ export default {
 }
 
 .divider {
-    line-height: 0.85;
+    line-height: 0.69;
     display: inline-block;
 
     &:last-of-type {
@@ -97,6 +97,10 @@ export default {
     }
     h2 {
         font-size: 1.6rem;
+    }
+
+    &.divider {
+        line-height: 0.5;
     }
 }
 </style>
