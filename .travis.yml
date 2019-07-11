@@ -2,10 +2,10 @@ language: node_js
 node_js:
     - node
 before_script:
-    - yarn global add parcel-bundler --no-source-maps
-script: parcel build index.html
-after_script:
-    - mv ./CNAME ./dist/CNAME
+    - yarn global add parcel-bundler
+script:
+    - parcel build index.html --no-source-maps
+    - cp ./CNAME ./dist/CNAME
 deploy:
   provider: pages
   skip_cleanup: true
