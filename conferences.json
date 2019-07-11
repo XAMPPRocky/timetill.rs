@@ -68,5 +68,23 @@
             "kind": "conference",
             "price": "Free"
         }
+    },
+    {
+        "name": "RustFest",
+        "date": "2019-11-09T00:00:00+01:00",
+        "blurb": "RustFest is the European Rust conference",
+        "location": "Barcelona, Spain",
+        "website": "//barcelona.rustfest.eu/",
+        "schedule": "//barcelona.rustfest.eu/schedule",
+        "features": {
+            "duration": "4 days",
+            "kind": "conference",
+            "price": "100-250€",
+            "RustBridge": "yes",
+            "workshops": "yes",
+            "live transcription": "yes",
+            "wheelchair accessible": "yes",
+            "childcare": "yes"
+        }
     }
 ]
