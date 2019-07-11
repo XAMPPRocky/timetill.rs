@@ -1,4 +1,6 @@
 # [Timetill.rs](//timetill.rs)
+[![Travis CI status](https://img.shields.io/travis/XAMPPRocky/timetill.rs.svg?branch=master)](https://travis-ci.org/XAMPPRocky/timetill.rs)
+
 This repository hosts the code for building the timetill.rs website. The website
 is hosted through GitHub pages.
 
