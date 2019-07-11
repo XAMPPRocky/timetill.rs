@@ -4,6 +4,8 @@ node_js:
 before_script:
     - yarn global add parcel-bundler --no-source-maps
 script: parcel build index.html
+after_script:
+    - mv ./CNAME ./dist/CNAME
 deploy:
   provider: pages
   skip_cleanup: true
