@@ -76,6 +76,10 @@
         "location": "Barcelona, Spain",
         "website": "//barcelona.rustfest.eu/",
         "schedule": "//barcelona.rustfest.eu/schedule",
+        "cfp": {
+            "end": "2019-08-19T23:59:59+01:00",
+            "link": "//cfp.rustfest.eu/events/rustfest-barcelona-2019"
+        },
         "features": {
             "duration": "4 days",
             "kind": "conference",
