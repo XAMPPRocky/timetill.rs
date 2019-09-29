@@ -1,5 +1,5 @@
 <template>
-    <div class="time row text-center">
+    <div class="time row">
         <div class="col">
         <template v-for="slice in slices">
             <div class="d-inline-block" :class="over100Days">
