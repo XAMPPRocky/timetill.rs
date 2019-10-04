@@ -2,7 +2,7 @@
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.0.0",
     "pug": "^2.0.4",
-    "sass": "^1.22.3",
+    "sass": "^1.23.0",
     "typescript": "^3.5.2",
     "vue-template-compiler": "^2.6.10"
   },
