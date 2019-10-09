@@ -25,7 +25,7 @@ the same lines as [The Rust Programming Language CoC], i.e. joke CoC's or CoC's
 that encourage harm or discrimination will be not be accepted.
 
 ## Event Schema
-```json
+```javascript
 {
     // This should be the name of the conference
     "name": "RustConf",
