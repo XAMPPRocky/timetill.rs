@@ -93,7 +93,7 @@
     },
         {
         "name": "FOSDEM 2020",
-        "date": "2020-02-03T00:00:00+01:00",
+        "date": "2020-02-02T00:00:00+01:00",
         "blurb": "Rust devroom at the Free and Open Source Developers European Meeting. This workshop aims to present the features and possibilities offered by Rust, as well as some of the many exciting tools and projects in its ecosystem.",
         "location": "Brussels, Belgium",
         "website": "//fosdem.org/",
