@@ -13,49 +13,50 @@ parcel index.html
 To add your event simply make a pull request adding it to the
 [`conferences.json`] file.
 
-## What events belong on `timetill.rs`.
+## Does my event belong on `timetill.rs`?
 Timetill.rs is focused on bigger Rust events. Regular meet-ups should be posted
-on the [community calendar]. If you're unsure if your event is big enough think
-_"Would someone travel from outside the city to specifically come to your
-event?"_, if the answer is yes then you should add it!
+on the [community calendar]. If you're unsure if your event is big enough ask
+yourself _"Would attendees travel from outside the local area to come to your
+event?"_, if the answer is yes then it belongs!
 
-All events that are featured on timetill.rs are required to have a Code of
-Conduct that is available to read on the website. The CoC should also be along
-the same lines as [The Rust Programming Language CoC], i.e. joke CoC's or CoC's
-that encourage harm or discrimination will be not be accepted.
+All events that are featured on timetill.rs are required to have and enforce a
+Code of Conduct that is available to read on their website.
 
 ## Event Schema
 ```javascript
 {
-    // This should be the name of the conference
+    // The name of your conference.
     "name": "RustConf",
-    // This should be the start date of the conference.
+    // The start date of your conference.
     "date": "2099-01-01T09:00:00-05:00",
-    // This should be a short summary  about your conference and what yours
-    // unique.
-    "blurb": "RustConf gathers Rust developers from around the world to learn and share with one another. It kicks off with optional training courses which lead into the Day 2 schedule of keynote speeches, technical talks and a community happy hour.",
-    // This should be where your conference is located. This should be in the
-    // format of "<CITY>, <COUNTRY>", please do not include the state or county.
+    // A short summary  about your conference and why someone should come to
+    // your conference.
+    "blurb": "RustConf gathers Rust developers from around the world to learn
+        and share with one another. It kicks off with optional training courses
+        which lead into the Day 2 schedule of keynote speeches, technical talks
+        and a community happy hour.",
+    // Where your conference is located. This should be in the
+    // format of "<CITY>, <COUNTRY>".
     "location": "Portland, USA",
-    // The website for your conference.
+    // The link to your website for your conference.
     "website": "//rustconf.com/",
     // The link to the schedule of the conference.
     "schedule": "//rustconf.com/schedule",
-    // This is a simple description list. The features should try to include as
-    // much of the features listed below as possible. More can be added if you
-    // think a feature of your conference really needs to stand out.
+    // A description list of conference features. If you do not have some of the
+    // features mentioned, please delete the entry. Feel free to also include
+    // features not mentioned.
     "features": {
-        // How long the conference is.
+        // Total duration of the conference.
         "duration": "2 days",
         // What kind of conference is it, i.e. a conference or a hackfest.
         "kind": "conference",
-        // This should be standard ticket price, not the discounted price.
+        // This should be a range of prices or the standard ticket price.
         "price": "$299",
-        // If your conference has a RustBridge workshop.
+        // Does your conference has a RustBridge workshop.
         "RustBridge": "yes",
         // If your conference has workshops.
         "workshops": "yes",
-        // If your conference has live transcription services which help make
+        // If your conference has live transcription services that help make
         // your conference more accessible.
         "live transcription": "yes",
         // If your conference is wheelchair accessible.
@@ -68,20 +69,12 @@ that encourage harm or discrimination will be not be accepted.
 ```
 
 # Design
-All design feedback should be provided as an issue. Design isn't like
-programming, everyone has different tastes so arbitrary concepts like changing
-the colours based on your preference will likely be closed. This is done for the
-sake of maintainability. This is a project that is being done in my spare
-time for no money.
+All design feedback should be provided as an issue on GitHub first, before
+providing a PR.
 
-Design feedback is always appreciated though, especially in regards to improving
-accessibility of website.
-
-# Tech
-The website is built using Vue.js, Bootstrap, Sass, and Parcel. Requests for
-changing to different frameworks will be rejected. The current website footprint
-is around ~265kB. This could be reduced but would have little gains for amount
-work required.
+# Code
+The website is built using Vue.js, Bootstrap, Sass, and Parcel. The current
+website footprint is around ~265kB.
 
 [`node`]: //nodejs.org/
 [`yarn`]: //yarnpkg.com
@@ -89,3 +82,4 @@ work required.
 [`conferences.json`]: ./conferences.json
 [community calendar]: //www.google.com/calendar/embed?src=apd9vmbc22egenmtu5l6c5jbfc%40group.calendar.google.com
 [The Rust Programming Language CoC]: https://www.rust-lang.org/policies/code-of-conduct
+
