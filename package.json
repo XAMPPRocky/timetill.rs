@@ -11,6 +11,6 @@
     "moment": "^2.24.0",
     "parcel-bundler": "^1.12.4",
     "vue": "^2.6.10",
-    "vue-hot-reload-api": "^2.3.3"
+    "vue-hot-reload-api": "^2.3.4"
   }
 }
