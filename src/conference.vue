@@ -40,7 +40,7 @@
                         <a :href="conference.website"
                            target="_blank"
                            class="text-uppercase btn btn-primary">website</a>
-                        <div class="w-100 divider"></div>
+                        <div class="w-100 h-ruler"></div>
                     </div>
                 </div>
             </div>
@@ -78,10 +78,6 @@ export default {
         margin-bottom: 0;
     }
 
-    .divider {
-        margin-top: 2rem;
-        border-bottom: 1px solid black;
-    }
 }
 
 .cfp {
