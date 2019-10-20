@@ -23,7 +23,7 @@ export default {
         }
     }
     computed: {
-        over100Days: function() {
+        over100Days() {
             return { 'small-numbers': this.getDuration().asDays() >= 100 }
         }
     }
