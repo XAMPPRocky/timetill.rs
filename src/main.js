@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import App from './app.vue'
 import Events from './events.vue'
-import Home from './home.vue'
+import Home from './Home.vue'
 
 import TimeSlice from './time-slice.vue'
 
