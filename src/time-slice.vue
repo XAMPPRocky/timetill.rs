@@ -47,7 +47,7 @@ export default {
             const duration = this.getDuration()
             let slices = []
 
-            if (duration.asDays() !== 0) {
+            if (duration.asDays() >= 2) {
                 slices.push({
                     time: Math.floor(duration.asDays()).toString().padStart(2, "0"),
                     period: "days"
