@@ -1,6 +1,6 @@
 <template>
     <header class="row sticky-top align-items-center">
-        <nav class="col-12 text-center">
+        <!--<nav class="col-12 text-center">
             <ul class="list-unstyled list-inline">
                 <li class="list-inline-item">
                     <router-link to="/">Conferences</router-link>
@@ -9,7 +9,7 @@
                     <router-link to="/events">Events</router-link>
                 </li>
             </ul>
-        </nav>
+        </nav> -->
         <div class="content col-12">
             <div class="row">
                 <div class="col text-center">
