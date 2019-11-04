@@ -1,12 +1,21 @@
 <template>
     <header class="row sticky-top align-items-center">
         <nav class="col-12 text-center">
-            <ul class="list-unstyled list-inline">
+            <ul class="list-unstyled list-inline d-flex justify-content-around">
                 <li class="list-inline-item">
-                    <router-link to="/">Conferences</router-link>
+                    <router-link to="/"><u>Conferences</u></router-link>
                 </li>
                 <li class="list-inline-item">
-                    <router-link to="/events">Events</router-link>
+                    <router-link to="/events"><u>Events</u></router-link>
+                </li>
+                <li class="list-inline-item" v-if="user">
+                    <router-link to="/profile" class="d-inline-block" style="vertical-align: middle">
+                        <inline-user :user="user"></inline-user>
+                        <span style="line-height: 0.1">▼</span>
+                    </router-link>
+                </li>
+                <li class="list-inline-item" v-else>
+                    <a :href="loginLink()"><u>Login with GitHub</u></a>
                 </li>
             </ul>
         </nav>
@@ -23,7 +32,7 @@
                     </h1>
                 </div>
                 <div class="col d-none d-md-block">
-                    <time-slice class="text-center" :time="event.date"></time-slice>
+                    <time-slice class="text-center" :event="event"></time-slice>
                 </div>
             </div>
         </div>
@@ -32,8 +41,15 @@
 
 <script lang="ts">
 export default {
+  methods: {
+    loginLink () {
+      return `http://localhost:5000/login?next_page=${window.location.pathname}`
+    },
+  }
+
   props: {
-    event: Object
+    event: Object,
+    user: Object
   }
 }
 </script>
@@ -43,18 +59,23 @@ header {
     position: -webkit-sticky;
     position: sticky;
     margin: 2rem 0;
-    padding: 1rem 0;
+    padding-top: 1rem;
     background-color: white;
 
     a {
         color: inherit;
-        text-decoration: underline;
+        text-decoration: none;
     }
 }
 
 .content {
-    border-top: 1px solid black;
     border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    box-shadow: 0px 10px 17px -11px rgba(0,0,0,0.25);
     padding: 1rem 0;
+
+    a {
+        text-decoration: underline;
+    }
 }
 </style>

@@ -1,0 +1,5 @@
+export default {
+  ACCESS_TOKEN_KEY: 'ACCESS_TOKEN',
+  USER_KEY: 'USER',
+  USER_ETAG_KEY: 'USER_ETAG'
+}

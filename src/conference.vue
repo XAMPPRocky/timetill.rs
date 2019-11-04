@@ -8,8 +8,7 @@
                 </h6>
             </div>
             <div class="col-12 col-sm-7 col-md-6 date">
-                <h6 class="text-center d-md-none">{{conference.date | date}}<br>{{conference.location}}</h6>
-                <time-slice class="text-center text-md-right" :time="conference.date"></time-slice>
+                <time-slice class="text-center text-md-right" :event="conference"></time-slice>
             </div>
             <div class="col-12 flex-grow-1">
                 <div class="row">

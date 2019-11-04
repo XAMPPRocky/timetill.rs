@@ -1,5 +1,8 @@
 <template>
     <div class="time row">
+        <div class="col-12">
+            <h6 class="text-center d-md-none">{{prefix}} {{event.date | date}}<br>{{location}}</h6>
+        </div>
         <div class="col">
         <template v-for="slice in slices">
             <div class="d-inline-block" :class="over100Days">
@@ -14,64 +17,79 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment';
+import moment from 'moment'
 
 export default {
-    data() {
-        return {
-            slices: []
-        }
+  data () {
+    return {
+      slices: []
     }
-    computed: {
-        over100Days() {
-            return { 'small-numbers': this.getDuration().asDays() >= 100 }
-        }
-    }
-    created() {
-        this.generateSlices()
-        window.setInterval(this.generateSlices, 1000)
-    }
-    destroyed() {
-        clearInterval(this.generateSlices)
-    }
-    props: {
-        time: String
-    }
-    methods: {
-        getDuration: function () {
-            const today = moment()
-            const confDate = moment(this.time)
-            return moment.duration(confDate.diff(today))
-        }
-        generateSlices: function () {
-            const duration = this.getDuration()
-            let slices = []
+  },
 
-            if (duration.asDays() !== 0) {
-                slices.push({
-                    time: Math.floor(duration.asDays()).toString().padStart(2, "0"),
-                    period: "days"
-                })
-            } else {
-                slices.push({
-                    time: duration.hours().toString().padStart(2, "0"),
-                    period: "hrs"
-                })
-            }
+  computed: {
+    over100Days () {
+      return { 'small-numbers': this.getDuration().asDays() >= 100 }
+    },
 
-            slices.push({
-                time: duration.minutes().toString().padStart(2, "0"),
-                period: "mins"
-            })
-
-            slices.push({
-                time: duration.seconds().toString().padStart(2, "0"),
-                period: "secs"
-            })
-
-            this.slices = slices
-        }
+    location (): String {
+      if (this.event.location) {
+        return this.event.location
+      } else {
+        return `${this.event.address}, ${this.event.city}`
+      }
     }
+  },
+
+  created () {
+    this.generateSlices()
+    window.setInterval(this.generateSlices, 1000)
+  },
+
+  destroyed () {
+    clearInterval(this.generateSlices)
+  },
+
+  props: {
+    event: Object,
+    prefix: String
+  },
+
+  methods: {
+    getDuration () {
+      const today = moment()
+      const confDate = moment(this.event.date)
+      return moment.duration(confDate.diff(today))
+    },
+
+    generateSlices () {
+      const duration = this.getDuration()
+      const slices = []
+
+      if (duration.asDays() !== 0) {
+        slices.push({
+          time: Math.floor(duration.asDays()).toString().padStart(2, '0'),
+          period: 'days'
+        })
+      }
+
+      slices.push({
+        time: duration.hours().toString().padStart(2, '0'),
+        period: 'hrs'
+      })
+
+      slices.push({
+        time: duration.minutes().toString().padStart(2, '0'),
+        period: 'mins'
+      })
+
+      slices.push({
+        time: duration.seconds().toString().padStart(2, '0'),
+        period: 'secs'
+      })
+
+      this.slices = slices
+    }
+  }
 }
 </script>
 
