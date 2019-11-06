@@ -3,7 +3,7 @@
     "vue": "./node_modules/vue/dist/vue.common.js"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.5.0",
     "@vue/component-compiler-utils": "^3.0.0",
     "eslint": "^6.6.0",
