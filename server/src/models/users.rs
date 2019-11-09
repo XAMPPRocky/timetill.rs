@@ -1,5 +1,5 @@
 use diesel::*;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use snafu::ResultExt;
 
 use crate::{
@@ -8,7 +8,7 @@ use crate::{
     Result,
 };
 
-#[derive(Queryable, Serialize)]
+#[derive(Clone, Debug, Deserialize, Queryable, Serialize)]
 pub struct User {
     pub github_id: i32,
     pub github_name: String,
@@ -42,7 +42,7 @@ impl User {
             .left_join(event_organisers::table)
             .filter(event_organisers::event_id.eq(event_id))
             .select(users::all_columns)
-            .get_results::<Self>(conn)
+            .get_results(conn)
             .context(error::Database)
     }
 
@@ -51,7 +51,7 @@ impl User {
             .left_join(event_attendees::table)
             .filter(event_attendees::event_id.eq(event_id))
             .select(users::all_columns)
-            .get_results::<Self>(conn)
+            .get_results(conn)
             .context(error::Database)
     }
 
@@ -61,6 +61,15 @@ impl User {
                 github_id,
                 github_name,
             })
+            .on_conflict_do_nothing()
+            .get_result(conn)
+            .context(error::Database)
+    }
+
+    pub fn add_reviewer(github_id: i32, conn: &PgConnection) -> Result<Self> {
+        diesel::update(users::table)
+            .filter(users::github_id.eq(github_id))
+            .set(users::reviewer.eq(true))
             .get_result(conn)
             .context(error::Database)
     }

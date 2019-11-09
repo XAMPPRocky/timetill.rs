@@ -1,9 +1,9 @@
 use actix_session::Session;
-use actix_web::{http, web, HttpResponse, Responder};
+use actix_web::{http, web, FromRequest, HttpRequest, HttpResponse, Responder};
 use serde::{Deserialize, Serialize};
 use snafu::ResultExt;
 
-use crate::{error, github, models};
+use crate::{error, github, middleware, models, Result};
 
 const AUTH_SESSION_STATE: &str = "state";
 
@@ -23,7 +23,7 @@ pub struct AuthState {
 pub fn login(
     web::Query(info): web::Query<LoginRequest>,
     session: Session,
-) -> crate::Result<impl Responder> {
+) -> Result<impl Responder> {
     let id = uuid::Uuid::new_v4().to_string();
     let auth_state = AuthState {
         id,
@@ -51,6 +51,10 @@ pub fn login(
         .finish())
 }
 
+pub fn current(middleware::CurrentUser(user): middleware::CurrentUser) -> Result<impl Responder> {
+    Ok(HttpResponse::Ok().json(user))
+}
+
 /// Authenication query parameters from GitHub.
 #[derive(Deserialize)]
 pub struct AuthRequest {
@@ -62,7 +66,7 @@ pub fn authorise(
     session: Session,
     clients: web::Data<crate::Clients>,
     web::Query(info): web::Query<AuthRequest>,
-) -> crate::Result<impl Responder> {
+) -> Result<impl Responder> {
     let state = session
         .get::<AuthState>(AUTH_SESSION_STATE)
         .context(error::Actix)?
@@ -112,7 +116,11 @@ pub fn authorise(
     session.clear();
     let conn = clients.pg.get().context(error::R2d2)?;
     let user = github::User::current(&token.access_token, &clients, &session)?;
-    models::User::insert(user.id, &user.login, &conn)?;
+
+    // If user hasn't signed up before put them in the database.
+    if models::User::find(user.id, &conn).is_err() {
+        models::User::insert(user.id, &user.login, &conn)?;
+    }
 
     Ok(HttpResponse::Found()
         .header(
@@ -128,4 +136,22 @@ pub fn authorise(
             ),
         )
         .finish())
+}
+
+pub fn add_reviewer(
+    middleware::CurrentUser(user): middleware::CurrentUser,
+    clients: web::Data<crate::Clients>,
+    new_reviewer: web::Path<i32>,
+) -> Result<impl Responder> {
+    let conn = clients.pg.get().context(error::R2d2)?;
+
+    if user.model.unwrap().reviewer || cfg!(debug_assertions) {
+        let user = models::User::find(*new_reviewer, &conn)?;
+
+        let updated = models::User::add_reviewer(user.github_id, &conn)?;
+
+        Ok(HttpResponse::Ok().json(updated))
+    } else {
+        error::MissingAuthorisation.fail()
+    }
 }

@@ -3,7 +3,7 @@ use redis::Commands;
 use serde::{Deserialize, Serialize};
 use snafu::ResultExt;
 
-use crate::{error, github, Result};
+use crate::{error, github, models, Result};
 
 const USER_ETAG: &str = "etag";
 
@@ -46,10 +46,17 @@ pub struct User {
     pub disk_usage: Option<i32>,
     pub collaborators: Option<i32>,
     pub two_factor_authentication: Option<bool>,
+
+    /// Extra fields from `models::User`
+    #[serde(skip_deserializing, skip_serializing_if = "Option::is_none")]
+    pub model: Option<models::User>,
 }
 
 impl User {
-    pub fn get<F>(
+    /// Get Github user based on the request given, and cache the result based
+    /// on `etag` if available. If the request does not receive a cached
+    /// response `on_new` is called with the user and its etag.
+    fn get<F>(
         clients: &crate::Clients,
         mut request: reqwest::RequestBuilder,
         etag: Option<&String>,
@@ -111,13 +118,19 @@ impl User {
             .header(http::header::AUTHORIZATION, format!("token {}", token));
         let etag = session.get::<String>(USER_ETAG).ok().and_then(|x| x);
 
-        Self::get(&clients, request, etag.as_ref(), |_, etag| {
+        let mut gh_user = Self::get(&clients, request, etag.as_ref(), |_, etag| {
             session.set(USER_ETAG, etag).context(error::Actix)?;
             Ok(())
-        })
+        })?;
+
+        let conn = clients.pg.get().context(error::R2d2)?;
+        let model = models::User::find(gh_user.id, &conn)?;
+        gh_user.model = Some(model);
+
+        Ok(gh_user)
     }
 
-    pub fn by_username(username: &str, clients: &crate::Clients) -> Result<Self> {
+    fn by_username(username: &str, clients: &crate::Clients) -> Result<Self> {
         let mut redis = clients.redis.get().context(error::R2d2)?;
         let key = format!("github-{}", username);
         let etag: Option<String> = redis.get(&key).context(error::Redis)?;
@@ -137,7 +150,10 @@ impl User {
         })
     }
 
-    pub fn from_model(user: crate::models::User, clients: &crate::Clients) -> Result<Self> {
-        github::User::by_username(&user.github_name, clients)
+    pub fn from_model(user: models::User, clients: &crate::Clients) -> Result<Self> {
+        let mut gh_user = github::User::by_username(&user.github_name, clients)?;
+        gh_user.model = Some(user);
+
+        Ok(gh_user)
     }
 }

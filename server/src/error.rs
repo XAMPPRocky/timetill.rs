@@ -1,3 +1,4 @@
+use actix_web::{http::StatusCode, HttpResponse, ResponseError};
 use snafu::{Backtrace, Snafu};
 
 #[derive(Debug, Snafu)]
@@ -36,6 +37,9 @@ pub enum Error {
     #[snafu(display("Missing required Authorization header."))]
     MissingAuthorisation,
 
+    #[snafu(display("Resource not found."))]
+    NotFound,
+
     #[snafu(display("R2D2 Error: {}\n{}", source, backtrace))]
     R2d2 {
         source: r2d2::Error,
@@ -61,7 +65,15 @@ pub enum Error {
     },
 }
 
-impl actix_web::ResponseError for Error {}
+impl ResponseError for Error {
+    fn error_response(&self) -> HttpResponse {
+        match self {
+            Self::MissingAuthorisation => HttpResponse::Unauthorized().finish(),
+            Self::NotFound => HttpResponse::NotFound().finish(),
+            _ => HttpResponse::InternalServerError().finish(),
+        }
+    }
+}
 
 impl From<diesel::result::Error> for Error {
     fn from(source: diesel::result::Error) -> Self {

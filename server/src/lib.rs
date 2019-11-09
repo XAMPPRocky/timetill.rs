@@ -41,29 +41,16 @@ pub struct Clients {
     pub http: reqwest::Client,
 }
 
-#[derive(Deserialize)]
-pub struct ProfileRequest {
-    #[serde(deserialize_with = "comma_sep_string")]
-    names: Vec<String>,
+trait ChronoExt {
+    fn is_in_future(&self) -> bool;
 }
 
-fn comma_sep_string<'de, D>(de: D) -> std::result::Result<Vec<String>, D::Error>
-where
-    D: serde::Deserializer<'de>,
-{
-    let value = String::deserialize(de)?;
-    Ok(value.split(',').map(String::from).collect::<Vec<_>>())
-}
+impl ChronoExt for chrono::DateTime<chrono::Utc> {
+    fn is_in_future(&self) -> bool {
+        let now = chrono::Utc::now();
 
-pub fn profiles(
-    clients: web::Data<Clients>,
-    web::Query(info): web::Query<ProfileRequest>,
-) -> Result<impl Responder> {
-    let mut profiles = Vec::with_capacity(info.names.len());
+        let result = now.signed_duration_since(*self);
 
-    for name in info.names {
-        profiles.push(github::User::by_username(&name, &clients)?);
+        result.is_zero()
     }
-
-    Ok(HttpResponse::Ok().json(profiles))
 }

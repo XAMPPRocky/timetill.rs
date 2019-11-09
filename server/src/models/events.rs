@@ -2,14 +2,9 @@ use diesel::*;
 use serde::{Deserialize, Serialize};
 use snafu::ResultExt;
 
-use crate::{
-    error, github,
-    models::{EventOrganiser, User},
-    schema::{event_attendees, event_organisers, events, users},
-    Result,
-};
+use crate::{error, schema::events, ChronoExt, Result};
 
-#[derive(Serialize, Queryable)]
+#[derive(Debug, Serialize, Queryable)]
 pub struct Event {
     pub event_id: i32,
     pub about_md: String,
@@ -51,8 +46,18 @@ pub struct NewEvent {
 }
 
 impl Event {
-    pub fn all(conn: &PgConnection) -> Result<Vec<Self>> {
-        events::table.get_results(conn).context(error::Database)
+    pub fn approved(conn: &PgConnection) -> Result<Vec<Self>> {
+        events::table
+            .filter(events::approved.eq(true))
+            .get_results(conn)
+            .context(error::Database)
+    }
+
+    pub fn unapproved(conn: &PgConnection) -> Result<Vec<Self>> {
+        events::table
+            .filter(events::approved.eq(false))
+            .get_results(conn)
+            .context(error::Database)
     }
 
     pub fn by_url(slug: &str, conn: &PgConnection) -> Result<Self> {
@@ -67,5 +72,15 @@ impl Event {
             .values(new_event)
             .get_result(conn)
             .context(error::Database)
+    }
+
+    /// Calculate the next event in the future, if possible. Returns `None` if
+    /// the event is in the past and the event is not recurring.
+    pub fn next_date(&self) -> Option<chrono::DateTime<chrono::Utc>> {
+        if self.event_date.is_in_future() {
+            Some(self.event_date)
+        } else {
+            None
+        }
     }
 }

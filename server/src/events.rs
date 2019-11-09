@@ -1,4 +1,4 @@
-use actix_web::{web, HttpResponse, Responder};
+use actix_web::{web, FromRequest, HttpRequest, HttpResponse, Responder};
 use diesel::*;
 use serde::Serialize;
 use snafu::ResultExt;
@@ -18,7 +18,7 @@ impl EventResponse {
 
 /// An Event to return from the API. The distniction between this an
 /// `models::Event` is that this uses Github user's instead of timetill.rs users.
-#[derive(Serialize)]
+#[derive(Debug, Serialize)]
 pub struct Event {
     #[serde(flatten)]
     pub details: models::Event,
@@ -27,6 +27,7 @@ pub struct Event {
 }
 
 impl Event {
+    /// Map from the database model's users to GitHub users.
     pub fn from_model(
         details: models::Event,
         conn: &PgConnection,
@@ -48,19 +49,43 @@ impl Event {
         })
     }
 
-    pub fn all(clients: &crate::Clients) -> Result<Vec<Self>> {
+    /// Retrieve all events.
+    pub fn approved(clients: &crate::Clients) -> Result<Vec<Self>> {
         let conn = clients.pg.get().context(error::R2d2)?;
-        models::Event::all(&conn)?
+        models::Event::approved(&conn)?
             .into_iter()
             .map(|e| Self::from_model(e, &conn, clients))
             .collect()
     }
 
+    /// Retrieve all events.
+    pub fn unapproved(clients: &crate::Clients) -> Result<Vec<Self>> {
+        let conn = clients.pg.get().context(error::R2d2)?;
+        models::Event::unapproved(&conn)?
+            .into_iter()
+            .map(|e| Self::from_model(e, &conn, clients))
+            .collect()
+    }
+
+    /// Retrieve all events.
+    pub fn attend(slug: &str, user: &github::User, clients: &crate::Clients) -> Result<Self> {
+        let conn = clients.pg.get().context(error::R2d2)?;
+        let event = models::Event::by_url(slug, &conn)?;
+        let user = models::User::find(user.id, &conn)?;
+
+        models::EventAttendee::attend(&event, user.github_id, &conn)?;
+
+        Self::from_model(event, &conn, clients)
+    }
+
+    /// Retrieve event by it's unique URL `slug`.
     pub fn by_url(slug: &str, clients: &crate::Clients) -> Result<Self> {
         let conn = clients.pg.get().context(error::R2d2)?;
         models::Event::by_url(slug, &conn).and_then(|e| Self::from_model(e, &conn, clients))
     }
 
+    /// Insert `new_event` into `events` and assign `organiser` as the first
+    /// event organiser.
     pub fn insert(
         new_event: &models::NewEvent,
         organiser: i32,
@@ -72,7 +97,7 @@ impl Event {
             let event = models::Event::insert(new_event, &conn)?;
             let organiser = models::EventOrganiser::insert(organiser, event.event_id, &conn)?;
             let user = models::User::find(organiser.organiser_id, &conn)?;
-            let gh_user = github::User::by_username(&user.github_name, clients)?;
+            let gh_user = github::User::from_model(user, clients)?;
 
             Ok(Self {
                 details: event,
@@ -101,13 +126,43 @@ pub fn create(
 }
 
 pub fn get(
+    req: HttpRequest,
     clients: web::Data<crate::Clients>,
-    input_slug: web::Path<String>,
+    slug: web::Path<String>,
 ) -> Result<impl Responder> {
-    Ok(HttpResponse::Ok().json(Event::by_url(&*input_slug, &clients)?))
+    let event = Event::by_url(&*slug, &clients)?;
+
+    if event.details.approved {
+        Ok(HttpResponse::Ok().json(event))
+    } else {
+        match middleware::CurrentUser::extract(&req) {
+            Ok(middleware::CurrentUser(user))
+                if user.model.as_ref().map(|m| m.reviewer).unwrap_or(false)
+                    || event.organisers.iter().any(|o| o.id == user.id) =>
+            {
+                Ok(HttpResponse::Ok().json(event))
+            }
+            _ => error::NotFound.fail(),
+        }
+    }
 }
 
 pub fn list(clients: web::Data<crate::Clients>) -> Result<impl Responder> {
-    let events = Event::all(&clients)?;
+    let events = Event::approved(&clients)?;
     Ok(HttpResponse::Ok().json(EventResponse::new(events)))
+}
+
+pub fn review_queue(clients: web::Data<crate::Clients>) -> Result<impl Responder> {
+    let events = Event::unapproved(&clients)?;
+    Ok(HttpResponse::Ok().json(EventResponse::new(events)))
+}
+
+pub fn attend(
+    slug: web::Path<String>,
+    middleware::CurrentUser(user): middleware::CurrentUser,
+    clients: web::Data<crate::Clients>,
+) -> Result<impl Responder> {
+    let event = Event::attend(&slug, &user, &clients)?;
+
+    Ok(HttpResponse::Ok().json(event))
 }

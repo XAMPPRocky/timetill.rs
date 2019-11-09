@@ -63,7 +63,7 @@ CREATE TABLE event_attendees (
     -- The date of when the attendee plans to attend the event. If they're
     -- a recurring attendee this is also the first event they attended.
 
-    event_date timestamptz NOT NULL,
+    attend_date timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- Whether a attendee is subscribed to come regularly to the event.
     recurring_attendee BOOLEAN DEFAULT FALSE NOT NULL,
     CONSTRAINT event_attendees_id PRIMARY KEY (attendee_id, event_id)

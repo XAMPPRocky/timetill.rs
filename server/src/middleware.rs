@@ -25,7 +25,9 @@ impl FromRequest for CurrentUser {
         })?;
 
         let session = Session::extract(req).context(error::Actix)?;
-        let user = github::User::current(token, &*clients, &session)?;
+        let user = github::User::current(token, &*clients, &session)
+            .ok()
+            .context(error::MissingAuthorisation)?;
 
         Ok(CurrentUser(user))
     }

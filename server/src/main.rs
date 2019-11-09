@@ -30,13 +30,21 @@ fn main() {
             .wrap(actix_cors::Cors::new())
             .wrap(actix_web::middleware::Logger::default())
             .route("/authorise", web::get().to(server::users::authorise))
-            .route("/profiles", web::get().to(server::profiles))
             .service(
                 web::resource("/events")
                     .route(web::get().to(server::events::list))
                     .route(web::post().to(server::events::create)),
             )
             .route("/events/{slug}", web::get().to(server::events::get))
+            .route(
+                "/events/{slug}/attend",
+                web::get().to(server::events::attend),
+            )
+            .route("/user", web::get().to(server::users::current))
+            .route(
+                "/add-reviewer/{github_id}",
+                web::get().to(server::users::add_reviewer),
+            )
             .route("/login", web::get().to(server::users::login))
     })
     .bind("0.0.0.0:5000")
