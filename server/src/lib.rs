@@ -14,12 +14,7 @@ pub mod users;
 #[allow(unused_imports)]
 mod schema;
 
-use actix_web::{web, HttpResponse, Responder};
 use r2d2_redis::{r2d2, RedisConnectionManager};
-use redis::Commands;
-use reqwest::StatusCode;
-use serde::Deserialize;
-use snafu::ResultExt;
 
 pub use error::Error;
 
