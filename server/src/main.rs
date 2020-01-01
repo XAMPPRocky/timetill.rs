@@ -35,11 +35,17 @@ fn main() {
                     .route(web::get().to(server::events::list))
                     .route(web::post().to(server::events::create)),
             )
+            .route("/review-queue", web::get().to(server::events::review_queue))
             .route("/events/{slug}", web::get().to(server::events::get))
             .route(
                 "/events/{slug}/attend",
                 web::get().to(server::events::attend),
             )
+            .route(
+                "/events/{slug}/approve",
+                web::get().to(server::events::approve),
+            )
+            .route("/events/{slug}/deny", web::get().to(server::events::deny))
             .route("/user", web::get().to(server::users::current))
             .route(
                 "/add-reviewer/{github_id}",

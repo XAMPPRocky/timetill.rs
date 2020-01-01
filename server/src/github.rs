@@ -107,7 +107,9 @@ impl User {
         }
     }
 
-    pub fn current(
+    /// Fetches the user from GitHub. **Note** this will never include the
+    /// `model` field.
+    pub fn from_github(
         token: &str,
         clients: &crate::Clients,
         session: &actix_session::Session,
@@ -118,11 +120,18 @@ impl User {
             .header(http::header::AUTHORIZATION, format!("token {}", token));
         let etag = session.get::<String>(USER_ETAG).ok().and_then(|x| x);
 
-        let mut gh_user = Self::get(&clients, request, etag.as_ref(), |_, etag| {
+        Self::get(&clients, request, etag.as_ref(), |_, etag| {
             session.set(USER_ETAG, etag).context(error::Actix)?;
             Ok(())
-        })?;
+        })
+    }
 
+    pub fn current(
+        token: &str,
+        clients: &crate::Clients,
+        session: &actix_session::Session,
+    ) -> Result<Self> {
+        let mut gh_user = Self::from_github(token, clients, session)?;
         let conn = clients.pg.get().context(error::R2d2)?;
         let model = models::User::find(gh_user.id, &conn)?;
         gh_user.model = Some(model);

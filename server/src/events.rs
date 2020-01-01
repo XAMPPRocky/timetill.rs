@@ -49,7 +49,7 @@ impl Event {
         })
     }
 
-    /// Retrieve all events.
+    /// Retrieve all approved events.
     pub fn approved(clients: &crate::Clients) -> Result<Vec<Self>> {
         let conn = clients.pg.get().context(error::R2d2)?;
         models::Event::approved(&conn)?
@@ -58,7 +58,7 @@ impl Event {
             .collect()
     }
 
-    /// Retrieve all events.
+    /// Retrieve all unapproved events.
     pub fn unapproved(clients: &crate::Clients) -> Result<Vec<Self>> {
         let conn = clients.pg.get().context(error::R2d2)?;
         models::Event::unapproved(&conn)?
@@ -82,6 +82,18 @@ impl Event {
     pub fn by_url(slug: &str, clients: &crate::Clients) -> Result<Self> {
         let conn = clients.pg.get().context(error::R2d2)?;
         models::Event::by_url(slug, &conn).and_then(|e| Self::from_model(e, &conn, clients))
+    }
+
+    /// Approve an event. Requires a user to have the `reviewer` permission.
+    pub fn approve(slug: &str, clients: &crate::Clients) -> Result<Self> {
+        let conn = clients.pg.get().context(error::R2d2)?;
+        models::Event::approve(slug, &conn).and_then(|e| Self::from_model(e, &conn, clients))
+    }
+
+    /// Approve an event. Requires a user to have the `reviewer` permission.
+    pub fn deny(slug: &str, clients: &crate::Clients) -> Result<()> {
+        let conn = clients.pg.get().context(error::R2d2)?;
+        models::Event::deny(slug, &conn)
     }
 
     /// Insert `new_event` into `events` and assign `organiser` as the first
@@ -152,9 +164,30 @@ pub fn list(clients: web::Data<crate::Clients>) -> Result<impl Responder> {
     Ok(HttpResponse::Ok().json(EventResponse::new(events)))
 }
 
-pub fn review_queue(clients: web::Data<crate::Clients>) -> Result<impl Responder> {
+pub fn review_queue(
+    clients: web::Data<crate::Clients>,
+    _reviewer: middleware::Reviewer,
+) -> Result<impl Responder> {
     let events = Event::unapproved(&clients)?;
     Ok(HttpResponse::Ok().json(EventResponse::new(events)))
+}
+
+pub fn approve(
+    clients: web::Data<crate::Clients>,
+    _reviewer: middleware::Reviewer,
+    slug: web::Path<String>,
+) -> Result<impl Responder> {
+    Ok(HttpResponse::Ok().json(Event::approve(&slug, &clients)?))
+}
+
+pub fn deny(
+    clients: web::Data<crate::Clients>,
+    _reviewer: middleware::Reviewer,
+    slug: web::Path<String>,
+) -> Result<impl Responder> {
+    Event::deny(&slug, &clients)?;
+
+    Ok(HttpResponse::NoContent().finish())
 }
 
 pub fn attend(

@@ -46,10 +46,24 @@ pub struct NewEvent {
 }
 
 impl Event {
+    pub fn approve(slug: &str, conn: &PgConnection) -> Result<Self> {
+        diesel::update(events::table.filter(events::slug.eq(slug)))
+            .set(events::approved.eq(true))
+            .get_result(conn)
+            .context(error::Database)
+    }
+
     pub fn approved(conn: &PgConnection) -> Result<Vec<Self>> {
         events::table
             .filter(events::approved.eq(true))
             .get_results(conn)
+            .context(error::Database)
+    }
+
+    pub fn deny(slug: &str, conn: &PgConnection) -> Result<()> {
+        diesel::delete(events::table.filter(events::slug.eq(slug)))
+            .execute(conn)
+            .map(|_| ())
             .context(error::Database)
     }
 

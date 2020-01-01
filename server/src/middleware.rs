@@ -32,3 +32,21 @@ impl FromRequest for CurrentUser {
         Ok(CurrentUser(user))
     }
 }
+
+pub struct Reviewer(crate::github::User);
+
+impl FromRequest for Reviewer {
+    type Error = crate::Error;
+    type Future = Result<Self, Self::Error>;
+    type Config = ();
+
+    fn from_request(req: &HttpRequest, _payload: &mut Payload) -> Self::Future {
+        let CurrentUser(user) = CurrentUser::extract(&req)?;
+
+        if user.model.as_ref().map(|m| m.reviewer).unwrap_or(false) {
+            Ok(Self(user))
+        } else {
+            error::MissingAuthorisation.fail()
+        }
+    }
+}

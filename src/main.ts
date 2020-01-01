@@ -9,6 +9,7 @@ import App from './App.vue'
 import Consts from './consts.ts'
 import EventDetail from './EventDetail.vue'
 import EventList from './EventList.vue'
+import EventForm from './EventForm.vue'
 import Home from './home.vue'
 import InlineUser from './InlineUser.vue'
 import TimeSlice from './TimeSlice.vue'
@@ -49,7 +50,10 @@ const routes = [
       {
         path: 'authorise',
         redirect (to) {
-          window.localStorage.setItem(Consts.ACCESS_TOKEN_KEY, to.query.access_token)
+          window.localStorage.setItem(
+            Consts.ACCESS_TOKEN_KEY,
+            to.query.access_token
+          )
           return { path: to.query.next_page, query: null }
         }
       },
@@ -68,27 +72,41 @@ const routes = [
       },
 
       {
+        path: 'review-queue',
+        name: 'reviewQueue',
+        component: EventList,
+        props: {
+          eventRoute: '/review-queue'
+        }
+      },
+
+      {
+        path: 'new-event',
+        name: 'newEvent',
+        component: EventForm
+      },
+
+      {
         path: '*',
         name: 'notFound',
-        component: NotFound,
-      },
-    ],
-  },
+        component: NotFound
+      }
+    ]
+  }
 ]
 
-const router = new Router({ routes, mode: 'history' })
-Vue.use(Router)
-
-Vue.component('time-slice', TimeSlice)
 Vue.component('inline-user', InlineUser)
-Vue.filter('date', (date) => moment(date).format('dddd, Do of MMMM YYYY'))
+Vue.component('time-slice', TimeSlice)
+Vue.filter('date', date => moment(date).format('dddd, Do of MMMM YYYY'))
+Vue.use(Router)
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
+const router = new Router({ routes, mode: 'history' })
 const data = {
   currentUser: null,
 
-  get user() {
+  get user () {
     if (!this.currentUser) {
       this.fetchUser()
     }
@@ -96,23 +114,25 @@ const data = {
     return this.currentUser
   },
 
-  isReviewer() {
+  isReviewer () {
     return this.currentUser.model.reviewer || false
   },
 
-  fetchUser() {
-    axios.get('/user').then(r => {
-      if (r.status === 304) {
-        return this.currentUser
-      } else if (r.status === 200) {
-        localStorage.setItem(Consts.USER_KEY, JSON.stringify(user));
-        this.currentUser = user;
-      } else {
-      }
-    })
-      .catch(e => {});
+  fetchUser () {
+    axios
+      .get('/user')
+      .then(r => {
+        if (r.status === 304) {
+          return this.currentUser
+        } else if (r.status === 200) {
+          const user = r.data
+          localStorage.setItem(Consts.USER_KEY, JSON.stringify(user))
+          this.currentUser = user
+        }
+      })
+      .catch(e => { console.error(e) })
   }
-};
+}
 
 /* eslint-disable no-new */
 new Vue({
@@ -120,13 +140,12 @@ new Vue({
   data,
   router,
 
-  created() {
+  created () {
     try {
       const token = localStorage.getItem(Consts.ACCESS_TOKEN_KEY)
       const etag = localStorage.getItem(Consts.USER_ETAG_KEY)
       this.currentUser = JSON.parse(localStorage.getItem(Consts.USER_KEY))
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`
     } catch (e) {}
-  },
-
+  }
 })

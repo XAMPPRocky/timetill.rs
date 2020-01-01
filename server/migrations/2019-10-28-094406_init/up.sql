@@ -27,8 +27,8 @@ CREATE TABLE events (
     -- The coordinates to the event's venue. If NULL, disables map integration.
     gps point,
     -- How often the event happens, can be NULL for once off events.
-    occurance_amount SMALLINT CHECK (occurance_step IS NOT NULL),
-    occurance_step VARCHAR CHECK (occurance_amount IS NOT NULL),
+    occurance_amount SMALLINT,
+    occurance_step VARCHAR,
     -- The region.
     region VARCHAR NOT NULL,
     -- The URL safe slug for the event.

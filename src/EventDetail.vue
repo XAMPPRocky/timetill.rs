@@ -8,14 +8,12 @@
           v-if="!event.approved"
         >
           <div class="row">
-            <div class="col align-middle d-flex">
-              <span class="align-self-center"
-                >This event is currently under review.</span
-              >
-            </div>
+            <div class="col align-middle d-flex">{{ reviewText }}</div>
             <div class="col d-inline-block text-right">
-              <button class="btn btn-primary">Approve</button>
-              <button class="btn btn-danger">Deny</button>
+              <button class="btn btn-primary" @click="approveEvent">
+                Approve
+              </button>
+              <button class="btn btn-danger" @click="denyEvent">Deny</button>
             </div>
           </div>
         </div>
@@ -122,11 +120,13 @@ export default class EventDetail extends Vue {
   event: object | null = null;
   url: string = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
   options: object = { zoomControl: window.innerWidth > 768 };
+  reviewText: string = "This event is currently under review";
+  pending: boolean = false;
 
   created() {
     if (!this.inputEvent) {
       axios
-        .get(`/events/${this.slug}`)
+        .get(this.routeUrl)
         .then(r => {
           this.event = r.data;
         })
@@ -136,6 +136,10 @@ export default class EventDetail extends Vue {
     } else {
       this.event = this.inputEvent;
     }
+  }
+
+  get routeUrl() {
+    return `/events/${this.slug}`;
   }
 
   get absoluteDuration() {
@@ -167,6 +171,28 @@ export default class EventDetail extends Vue {
 
   get isInFuture(): boolean {
     return moment(this.event.event_date).isAfter();
+  }
+
+  approveEvent(event) {
+    if (!this.pending) {
+      this.pending = true;
+      axios.get(`${this.routeUrl}/approve`).then(() => {
+        this.reviewText = `Event Approved!`;
+        this.pending = false;
+        event.target.parentElement.hidden = true;
+      });
+    }
+  }
+
+  denyEvent(event) {
+    if (!this.pending) {
+      this.pending = true;
+      axios.get(`${this.routeUrl}/deny`).then(() => {
+        this.reviewText = `Event Denied!`;
+        this.pending = false;
+        event.target.parentElement.hidden = true;
+      });
+    }
   }
 
   squareMap(): number {

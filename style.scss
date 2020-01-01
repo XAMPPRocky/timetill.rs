@@ -5,6 +5,10 @@ $secondary: $gray;
 $info: $orange;
 @import 'node_modules/bootstrap/scss/bootstrap';
 
+body {
+  min-height: 100vh;
+}
+
 a:hover {
     color: inherit;
 }

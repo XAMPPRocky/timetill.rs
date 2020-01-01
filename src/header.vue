@@ -17,7 +17,7 @@
               >▼</span
             >
           </button>
-          <a v-else :href="loginLink()"><u>Login with GitHub</u></a>
+          <a v-else :href="loginLink()">Login with GitHub</a>
         </li>
       </ul>
     </nav>
@@ -28,11 +28,19 @@
         <div class="col">
           <ul class="text-left d-inline-block">
             <li v-if="$root.$data.isReviewer()">
-              <router-link to="/my-events">Review Events</router-link>
+              <router-link :to="headerLink('/review-queue')"
+                >Review Events</router-link
+              >
             </li>
-            <li><router-link to="/my-events">My Events</router-link></li>
             <li>
-              <router-link to="/events/create">Create New Event</router-link>
+              <router-link :to="headerLink('/my-events')"
+                >My Events</router-link
+              >
+            </li>
+            <li>
+              <router-link :to="headerLink('/new-event')"
+                >Create New Event</router-link
+              >
             </li>
           </ul>
         </div>
@@ -69,6 +77,7 @@ import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import moment from "moment";
 import { LMap, LMarker, LTileLayer } from "vue2-leaflet";
+import axios from "axios";
 
 @Component()
 export default class Header extends Vue {
@@ -76,7 +85,13 @@ export default class Header extends Vue {
   expand: boolean = false;
 
   loginLink() {
-    return `http://localhost:5000/login?next_page=${window.location.pathname}`;
+    return `${axios.defaults.baseURL}/login?next_page=${
+      window.location.pathname
+    }`;
+  }
+
+  headerLink(path) {
+    return { path };
   }
 
   toggleDisclosure() {

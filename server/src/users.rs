@@ -1,5 +1,5 @@
 use actix_session::Session;
-use actix_web::{http, web, FromRequest, HttpRequest, HttpResponse, Responder};
+use actix_web::{http, web, HttpResponse, Responder};
 use serde::{Deserialize, Serialize};
 use snafu::ResultExt;
 
@@ -115,7 +115,7 @@ pub fn authorise(
     // Always get a fresh instance of the data
     session.clear();
     let conn = clients.pg.get().context(error::R2d2)?;
-    let user = github::User::current(&token.access_token, &clients, &session)?;
+    let user = github::User::from_github(&token.access_token, &clients, &session)?;
 
     // If user hasn't signed up before put them in the database.
     if models::User::find(user.id, &conn).is_err() {

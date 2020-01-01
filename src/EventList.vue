@@ -25,8 +25,8 @@
             <div class="col-12 event" v-for="event in events" :key="event.name">
               <h3>
                 <router-link :to="eventDetail(event)">
-                  {{ event.name }}</router-link
-                >
+                  {{ event.event }}
+                </router-link>
               </h3>
               <h6>{{ event.date | date }}</h6>
 
@@ -52,6 +52,7 @@ import axios from "axios";
 
 @Component
 export default class EventList extends Vue {
+  @Prop({ default: "/events" }) eventRoute: string;
   regions: object | null = null;
 
   created() {
@@ -70,7 +71,7 @@ export default class EventList extends Vue {
 
   @Watch("$route")
   fetchEvents() {
-    axios.get("/events").then(response => {
+    axios.get(this.eventRoute).then(response => {
       this.regions = response.data.events.reduce((regions, event) => {
         if (!regions[event.region]) regions[event.region] = {};
 
