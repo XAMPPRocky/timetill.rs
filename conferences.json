@@ -91,7 +91,7 @@
             "childcare": "yes"
         }
     },
-        {
+    {
         "name": "FOSDEM 2020",
         "date": "2020-02-02T00:00:00+01:00",
         "blurb": "Rust devroom at the Free and Open Source Developers European Meeting. This workshop aims to present the features and possibilities offered by Rust, as well as some of the many exciting tools and projects in its ecosystem.",
@@ -106,6 +106,26 @@
             "duration": "1 day",
             "kind": "workshop",
             "price": "free",
+            "wheelchair accessible": "yes",
+            "live streaming": "yes",
+            "recorded talks": "yes"
+        }
+    },
+    {
+        "name": "Rust LATAM 2020",
+        "date": "2020-05-22T10:00:00+01:00",
+        "blurb": "Where Rust meets Latin America! Rust Latam is the Latin America's leading event for and by the Rust community. Two days of interactive sessions, hands-on activities and engaging talks to bring the community together.",
+        "location": "Mexico City, Mexico",
+        "website": "//rustlatam.org/",
+        "schedule": "//rustlatam.org/#schedule",
+        "cfp": {
+            "end": "2020-02-03T23:59:59+01:00",
+            "link": "//cfp.rustlatam.org"
+        },
+        "features": {
+            "duration": "2 days",
+            "kind": "conference",
+            "price": "940-1900 MXD (50-100 USD)",
             "wheelchair accessible": "yes",
             "live streaming": "yes",
             "recorded talks": "yes"
