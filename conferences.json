@@ -126,7 +126,7 @@
             "duration": "2 days",
             "kind": "conference",
             "price": "940-1900 MXD (50-100 USD)",
-            "wheelchair accessible": "yes",
+            "wheelchair accessible": "no",
             "live streaming": "yes",
             "recorded talks": "yes"
         }
