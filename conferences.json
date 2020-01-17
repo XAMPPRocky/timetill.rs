@@ -130,5 +130,19 @@
             "live streaming": "yes",
             "recorded talks": "yes"
         }
+    },
+    {
+        "name": "RustLab",
+        "date": "2020-10-16T09:00:00+01:00",
+        "blurb": "RustLab 2020 is a 2 days conference with talks and workshops in Florence. The date is fixed, the rest is to be defined.",
+        "location": "Florence, Italy",
+        "website": "//rustlab.it/",
+        "schedule": "//rustlab.it/agenda",
+        "features": {
+            "duration": "2 days",
+            "kind": "conference",
+            "price": "tbd",
+            "workshops": "yes"
+        }
     }
 ]
