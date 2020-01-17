@@ -15,7 +15,7 @@
     "eslint-plugin-vue": "^6.1.2",
     "pug": "^2.0.4",
     "sass": "^1.24.4",
-    "typescript": "^3.7.4",
+    "typescript": "^3.7.5",
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
