@@ -120,7 +120,7 @@
         "features": {
             "duration": "3 day",
             "kind": "conference",
-            "price": "€50—€250",
+            "price": "€50–€250",
             "impl days": "yes",
             "recorded talks": "yes",
             "workshops": "yes (seperate ticket)",
