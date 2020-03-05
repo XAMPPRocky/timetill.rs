@@ -94,7 +94,7 @@
         }
     },
     {
-        "name": "Rust+GNOME Hackfest 2020",
+        "name": "Rust+GNOME Hackfest",
         "date": "2020-04-29T09:00:00+05:00",
         "blurb": "In this hackfest we want to improve the interoperability between Rust and GNOME, improve support of GNOME libraries in Rust and explore solutions to create GObject APIs from Rust.",
         "location": "Montréal, Canada",
