@@ -1,0 +1,20 @@
+# This is a basic workflow to help you get started with Actions
+name: Build & Deploy
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: parcel build index.html --no-source-maps
+    - run: cp ./CNAME ./dist/CNAME
+    - uses: JamesIves/github-pages-deploy-action@releases/v3
+      if: github.ref == 'ref/heads/master'
+      with:
+        ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: dist
