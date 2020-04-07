@@ -15,9 +15,9 @@
     "eslint-plugin-vue": "^5.2.3",
     "inquirer": "^7.0.0",
     "markdown-it": "^10.0.0",
-    "sass": "^1.23.0",
+    "sass": "^1.26.3",
     "shelljs": "^0.8.3",
-    "typescript": "^3.6.4",
+    "typescript": "^3.8.3",
     "vue-template-compiler": "^2.6.10",
     "yaml": "^1.7.2"
   },
