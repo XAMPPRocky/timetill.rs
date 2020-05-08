@@ -107,14 +107,14 @@
         }
     },
     {
-        "name": "OxidizeConf",
-        "date": "2020-07-17T09:00:00+01:00",
+        "name": "Oxidize Global",
+        "date": "2020-10-23T09:00:00+01:00",
         "blurb": "OxidizeConf is about learning, and improving your programming skills with embedded systems and IoT in Rust. The conference plans on having one day of guided workshops for developers looking to start or improve their Embedded Rust skills, one day of talks by community members, and a two day development session focused on Hardware and Embedded subjects in Rust.",
-        "location": "Berlin, Germany",
+        "location": "Remote",
         "website": "//oxidizeconf.com",
         "schedule": "//oxidizeconf.com/schedule/",
         "cfp": {
-            "end": "2020-03-31T23:59:59+01:00",
+            "end": "2020-08-03T23:59:59+01:00",
             "link": "//cfp.oxidizeconf.com/events/oxidize-2020"
         },
         "features": {
@@ -129,7 +129,7 @@
     },
     {
         "name": "Rust LATAM",
-        "date": "2020-05-22T10:00:00+01:00",
+        "date": "2019-05-22T10:00:00+01:00",
         "blurb": "Where Rust meets Latin America! Rust Latam is the Latin America's leading event for and by the Rust community. Two days of interactive sessions, hands-on activities and engaging talks to bring the community together.",
         "location": "Mexico City, Mexico",
         "website": "//rustlatam.org/",
@@ -165,7 +165,7 @@
     },
     {
         "name": "RustLab",
-        "date": "2020-10-16T09:00:00+01:00",
+        "date": "2019-10-16T09:00:00+01:00",
         "blurb": "RustLab 2020 is a 2 days conference with talks and workshops in Florence. The date is fixed, the rest is to be defined.",
         "location": "Florence, Italy",
         "website": "//rustlab.it/",
