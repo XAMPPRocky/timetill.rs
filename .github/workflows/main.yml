@@ -3,7 +3,7 @@ name: Build & Deploy
 on:
   push:
     branches: [ master ]
-  pull_request:
+#  pull_request:
 
 jobs:
   build:
@@ -14,7 +14,6 @@ jobs:
     - run: parcel build index.html --no-source-maps
     - run: cp ./CNAME ./dist/CNAME
     - uses: JamesIves/github-pages-deploy-action@releases/v3
-      if: github.event == 'push'
       with:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
