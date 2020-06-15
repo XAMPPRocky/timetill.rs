@@ -74,6 +74,28 @@
         }
     },
     {
+        "name": "RustFest Global 2020",
+        "date": "2020-11-07T00:00:00+01:00",
+        "blurb": "RustFest is the European Rust conference",
+        "location": "Online, Europa",
+        "website": "//2020.rustfest.eu/",
+        "schedule": "//2020.rustfest.eu/schedule",
+        "cfp": {
+            "end": "2020-08-01T23:59:59+01:00",
+            "link": "//cfp.rustfest.eu/events/rustfest-global-2020"
+        },
+        "features": {
+            "duration": "2 days",
+            "kind": "conference",
+            "price": "100-250€",
+            "RustBridge": "yes, probably",
+            "workshops": "yes",
+            "live transcription": "yes",
+            "wheelchair accessible": "online",
+            "childcare": "no"
+        }
+    },
+    {
         "name": "FOSDEM 2020",
         "date": "2020-02-02T00:00:00+01:00",
         "blurb": "Rust devroom at the Free and Open Source Developers European Meeting. This workshop aims to present the features and possibilities offered by Rust, as well as some of the many exciting tools and projects in its ecosystem.",
