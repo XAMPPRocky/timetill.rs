@@ -187,13 +187,12 @@
     },
     {
         "name": "RustLab",
-        "date": "2019-10-16T09:00:00+01:00",
-        "blurb": "RustLab 2020 is a 2 days conference with talks and workshops in Florence. The date is fixed, the rest is to be defined.",
-        "location": "Florence, Italy",
+        "date": "2020-10-12T09:00:00+01:00",
+        "blurb": "RustLab 2020 will be a remote event, from October 12th to 18th, and the CFP will open on July 13th. This won’t be the same, but we are working hard to deliver a wonderful experience to all our attendees!",
+        "location": "Remote (organized in Florence, Italy)",
         "website": "//rustlab.it/",
-        "schedule": "//rustlab.it/agenda",
         "features": {
-            "duration": "2 days",
+            "duration": "6 days",
             "kind": "conference",
             "price": "tbd",
             "workshops": "yes"
