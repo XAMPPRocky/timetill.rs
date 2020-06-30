@@ -197,5 +197,21 @@
             "price": "tbd",
             "workshops": "yes"
         }
+    },
+    {
+        "name": "Rusty Days",
+        "date": "2020-07-27T18:00:00+01:00",
+        "blurb": "Rusty Days is a new conference and was planned to happen in Wrocław, Poland. It now turned into a virtual Rust conference streched over five days - from July 27th to July 31st. Everything is free of charge, streamed online and available to watch later. The conference is going to be followed by a hackhaton during the weekend (August 1st-2nd)",
+        "location": "Remote",
+        "website": "//rusty-days.org",
+        "features": {
+            "duration": "7 days",
+            "kind": "conference",
+            "price": "free",
+            "recorded talks": "yes",
+            "workshops": "no",
+            "hackaton": "yes",
+            "live streaming": "yes"
+        }
     }
 ]
