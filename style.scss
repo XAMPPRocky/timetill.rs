@@ -9,6 +9,12 @@ p a:hover {
     color: inherit;
 }
 
+.btn-secondary:not([href]) {
+    background-color: #e5eff2;
+    border-color: transparent;
+    color: #ccc;
+}
+
 footer {
     padding: 2rem 0;
     background-color: #02182B;
