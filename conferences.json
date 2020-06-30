@@ -77,7 +77,7 @@
         "name": "RustFest Global 2020",
         "date": "2020-11-07T00:00:00+01:00",
         "blurb": "RustFest is the European Rust conference",
-        "location": "Online, Europa",
+        "location": "Online, Europe",
         "website": "//2020.rustfest.eu/",
         "schedule": "//2020.rustfest.eu/schedule",
         "cfp": {
