@@ -130,7 +130,7 @@
     },
     {
         "name": "Oxidize Global",
-        "date": "2020-10-23T09:00:00+01:00",
+        "date": "2020-07-17T09:00:00+01:00",
         "blurb": "OxidizeConf is about learning, and improving your programming skills with embedded systems and IoT in Rust. The conference plans on having one day of guided workshops for developers looking to start or improve their Embedded Rust skills, one day of talks by community members, and a two day development session focused on Hardware and Embedded subjects in Rust.",
         "location": "Remote",
         "website": "//oxidizeconf.com",
