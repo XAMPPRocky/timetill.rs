@@ -210,5 +210,18 @@
             "hackaton": "yes",
             "live streaming": "yes"
         }
-    }
+    },
+    {
+        "name": "RustConf",
+        "date": "2020-08-20T09:30:00-07:00",
+        "blurb": "RustConf 2020 online",
+        "location": "Portland, USA",
+        "website": "//rustconf.com/",
+        "schedule": "//rustconf.com/schedule",
+        "features": {
+            "duration": "1 day",
+            "kind": "conference",
+            "price": "99 USD",
+        }
+    },
 ]
