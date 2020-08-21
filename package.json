@@ -16,13 +16,13 @@
     "pug": "^2.0.4",
     "sass": "^1.26.10",
     "typescript": "^3.9.7",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
     "bootstrap": "^4.5.2",
     "moment": "^2.27.0",
     "parcel-bundler": "^1.12.4",
-    "vue": "^2.6.11",
+    "vue": "^2.6.12",
     "vue-hot-reload-api": "^2.3.4",
     "vue-router": "^3.4.3"
   }
