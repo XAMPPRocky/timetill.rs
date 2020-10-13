@@ -19,7 +19,7 @@
     "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^4.5.3",
     "moment": "^2.29.1",
     "parcel-bundler": "^1.12.4",
     "vue": "^2.6.12",
