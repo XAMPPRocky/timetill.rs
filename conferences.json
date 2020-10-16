@@ -78,8 +78,8 @@
         "date": "2020-11-07T00:00:00+01:00",
         "blurb": "RustFest is the European Rust conference",
         "location": "Online, Europe",
-        "website": "//2020.rustfest.eu/",
-        "schedule": "//2020.rustfest.eu/schedule",
+        "website": "//rustfest.global/",
+        "schedule": "//rustfest.global/schedule",
         "cfp": {
             "end": "2020-08-01T23:59:59+01:00",
             "link": "//cfp.rustfest.eu/events/rustfest-global-2020"
