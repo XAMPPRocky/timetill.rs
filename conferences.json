@@ -75,21 +75,21 @@
     },
     {
         "name": "RustFest Global 2020",
-        "date": "2020-11-07T00:00:00+01:00",
+        "date": "2020-11-07T01:00:00+00:00",
         "blurb": "RustFest is the European Rust conference",
         "location": "Online, Europe",
         "website": "//rustfest.global/",
         "schedule": "//rustfest.global/schedule",
         "cfp": {
-            "end": "2020-08-01T23:59:59+01:00",
+            "end": "2020-09-30T23:59:59+01:00",
             "link": "//cfp.rustfest.eu/events/rustfest-global-2020"
         },
         "features": {
             "duration": "2 days",
             "kind": "conference",
-            "price": "100-250€",
-            "RustBridge": "yes, probably",
-            "workshops": "yes",
+            "price": "0-100€",
+            "RustBridge": "no",
+            "workshops": "no",
             "live transcription": "yes",
             "wheelchair accessible": "online",
             "childcare": "no"
