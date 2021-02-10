@@ -224,4 +224,20 @@
             "price": "99 USD",
         }
     },
+    {
+        "name": "Cloud Native Rust Day",
+        "date": "2021-05-03T08:00:00+02:00",
+        "blurb": "Come explore what makes Rust a fantastic choice for new cloud native development, and learn about how the community uses Rust today.",
+        "location": "Remote",
+        "website": "//events.linuxfoundation.org/cloud-native-rust-day/",
+        "cfp": {
+            "end": "2021-02-19T23:59:00-08:00",
+            "link": "//events.linuxfoundation.org/cloud-native-rust-day/program/cfp/"
+        },
+        "features": {
+            "duration": "1 day",
+            "kind": "conference",
+            "price": "$20",
+        }
+    },
 ]
