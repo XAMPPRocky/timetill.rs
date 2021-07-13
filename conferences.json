@@ -240,4 +240,20 @@
             "price": "$20",
         }
     },
+    {
+        "name": "RustConf",
+        "date": "2021-09-14T10:00:00-07:00",
+        "blurb": "RustConf gathers Rust developers from around the world to learn and share with one another.",
+        "location": "Remote / Portland, USA",
+        "website": "//rustconf.com/",
+        "schedule": "//rustconf.com/schedule",
+        "features": {
+            "duration": "2 days",
+            "kind": "conference",
+            "price": "TBA",
+            "live transcription": "TBA",
+            "wheelchair accessible": "yes",
+            "childcare": "no"
+        }
+    },
 ]
