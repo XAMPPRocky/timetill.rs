@@ -256,4 +256,17 @@
             "childcare": "no"
         }
     },
+    {
+        "name": "Rust.Tokyo",
+        "date": "2021-09-18T10:00:00+09:00",
+        "blurb": "Rust.Tokyo is an one day conference for Rustaceans that want to deepen their knowledge.",
+        "location": "Remote / Tokyo, Japan",
+        "website": "//rust.tokyo",
+        "schedule": "//rust.tokyo/#sessions",
+        "features": {
+            "duration": "1 day",
+            "kind": "conference",
+            "price": "TBA"
+        }
+    },
 ]
