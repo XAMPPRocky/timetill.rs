@@ -262,11 +262,11 @@
         "blurb": "Rust.Tokyo is an one day conference for Rustaceans that want to deepen their knowledge.",
         "location": "Remote / Tokyo, Japan",
         "website": "//rust.tokyo",
-        "schedule": "//rust.tokyo/#sessions",
+        "schedule": "//rust.tokyo/lineup/en",
         "features": {
             "duration": "1 day",
             "kind": "conference",
-            "price": "TBA"
+            "price": "Free"
         }
     },
 ]
