@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.6.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.3",
     "parcel-bundler": "^1.12.4",
     "vue": "^2.6.12",
     "vue-hot-reload-api": "^2.3.4",
