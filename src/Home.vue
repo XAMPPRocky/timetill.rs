@@ -33,8 +33,14 @@
                 </div>
             </div>
 
+            <div v-if="conferences.length > 0">
             <conference v-for="conference in conferences" :key="conference.name"
                         :conference="conference"></conference>
+            </div>
+            <div v-else>
+                There are no conferences currently listed. To add an event, check out
+                <a href="//github.com/XAMPPRocky/timetill.rs/blob/master/CONTRIBUTING.md">the contributing guide</a>.
+            </div>
         </section>
     </div>
 </template>
