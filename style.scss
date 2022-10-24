@@ -6,38 +6,38 @@ $info: $orange;
 @import "node_modules/bootstrap/scss/bootstrap";
 
 html {
-	height: 100%;
+    height: 100%;
 }
 
 body {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 #app {
-	flex: 1;
+    flex: 1;
 }
 
 p a:hover {
-	color: inherit;
+    color: inherit;
 }
 
 .btn-secondary:not([href]) {
-	background-color: #e5eff2;
-	border-color: transparent;
-	color: #ccc;
+    background-color: #e5eff2;
+    border-color: transparent;
+    color: #ccc;
 }
 
 footer {
-	padding: 2rem 0;
-	background-color: #02182b;
+    padding: 2rem 0;
+    background-color: #02182b;
 
-	ul {
-		margin: 0;
-	}
-	li,
-	a {
-		color: white;
-	}
+    ul {
+        margin: 0;
+    }
+    li,
+    a {
+        color: white;
+    }
 }
