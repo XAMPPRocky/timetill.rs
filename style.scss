@@ -1,9 +1,23 @@
-$orange: #E26D5A;
-$blue: #3C91E6;
-$gray: #393E41;
+$orange: #e26d5a;
+$blue: #3c91e6;
+$gray: #393e41;
 $secondary: $gray;
 $info: $orange;
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import "node_modules/bootstrap/scss/bootstrap";
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#app {
+    flex: 1;
+}
 
 p a:hover {
     color: inherit;
@@ -17,12 +31,13 @@ p a:hover {
 
 footer {
     padding: 2rem 0;
-    background-color: #02182B;
+    background-color: #02182b;
 
     ul {
         margin: 0;
     }
-    li, a {
+    li,
+    a {
         color: white;
     }
 }
